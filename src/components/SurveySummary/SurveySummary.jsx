@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import "./surveySummary.css";
 import { useSelector } from "react-redux";
 import { Chart } from "chart.js/auto";
+import { useNavigate } from "react-router-dom";
 
 const SurveySummary = () => {
   const questions = useSelector((state) => state.survey.questions);
@@ -20,6 +21,10 @@ const SurveySummary = () => {
   const totalScore = questions.length;
 
   useEffect(() => {
+    if (!questions || Object.keys(userAnswers).length === 0) {
+      navigate("/");
+    }
+
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
@@ -54,15 +59,35 @@ const SurveySummary = () => {
         <ul className="surveyResultLists">
           {questions.map((question) => (
             <li key={question.id} className="surveyResultListItems">
-              {question.text} - Your Answer: {userAnswers[question.id]}
+              <div className="question-text">
+                <h4>{question.text}</h4>
+                <p className="answer-text">
+                  Your Answer:{" "}
+                  <span
+                    className={
+                      userAnswers[question.id] === question.correctAnswer
+                        ? "green-text"
+                        : "red-text"
+                    }
+                  >
+                    {userAnswers[question.id]}
+                  </span>
+                </p>
+                {userAnswers[question.id] !== question.correctAnswer && (
+                  <p>
+                    Correct Answer:
+                    <span className="correct-answer">
+                      {question.correctAnswer}
+                    </span>
+                  </p>
+                )}
+              </div>
             </li>
           ))}
         </ul>
       </div>
-      <div
-        style={{ width: "500px", height: "250px", marginTop: "25px" }}
-        className="surveyResult"
-      >
+      <div className="surveyResult">
+        <h1 className="surveyResultTitle">Your Performance</h1>
         <canvas ref={chartRef} />
       </div>
     </div>
