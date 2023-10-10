@@ -19,28 +19,29 @@ const SurveyQuestions = () => {
       };
     
       const handleNextOrSubmitClick = () => {
-        if (currentQuestionIndex === questions.length - 2 && !submitted) {
-          const unansweredQuestions = questions
-            .slice(currentQuestionIndex, currentQuestionIndex + 2)
-            .filter((question) => !userAnswers[question.id]);
-          if (unansweredQuestions.length === 0) {
+        // if (currentQuestionIndex === questions.length - 4 && !submitted) {
+        //   const unansweredQuestions = questions
+        //     .slice(currentQuestionIndex, currentQuestionIndex + 4)
+        //     .filter((question) => !userAnswers[question.id]);
+        //   if (unansweredQuestions.length === 0) {
             dispatch(submitSurvey());
             navigate("/results");
-          } else {
-            toast.error("Please answer all questions before submitting.", {
-              theme: "dark",
-            });
-          }
-        } else if (
-          userAnswers[questions[currentQuestionIndex].id] &&
-          userAnswers[questions[currentQuestionIndex + 1].id]
-        ) {
-          dispatch(nextQuestion());
-        } else {
-          toast.error("Please answer all questions before proceeding.", {
-            theme: "dark",
-          });
-        }
+        //   } else {
+        //     toast.error("Please answer all questions before submitting.", {
+        //       theme: "dark",
+        //     });
+        //   }
+        // }
+        //  else if (
+        //   userAnswers[questions[currentQuestionIndex].id] &&
+        //   userAnswers[questions[currentQuestionIndex + 1].id]
+        // ) {
+        //   dispatch(nextQuestion());
+        // } else {
+        //   toast.error("Please answer all questions before proceeding.", {
+        //     theme: "dark",
+        //   });
+        // }
       };
     
   return (
